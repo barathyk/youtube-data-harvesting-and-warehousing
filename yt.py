@@ -313,7 +313,9 @@ if selected =="DATA ANALYSIS":
             st.plotly_chart(fig,use_container_width=True)
         
     elif questions == '4.How many comments were made on each video and what are their corresponding video names?':
-            qry4 ="select a.video_id as vi,a.Title as t,b.comments_count from videos as a left join (select video_id,count(comments_id)as cm from comments group by video_id) as b on a.video_id=b.video_id order by b.cm desc"
+            qry4 """select a.video_id as video_id, a.title as Title,b.total_comments from videos
+                    as a left join (select video_id ,count(comments_id) as total_comments from comments group by video_id) as b 
+                    on a.video_id = b.video_id order by b.total_comments  desc;"""
             mycursor.execute(qry4)
             mycon.commit()
             df =pd.DataFrame(mycursor.fetchall(),columns=mycursor.column_names)
